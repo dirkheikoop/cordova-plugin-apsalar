@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+           id="org.apache.cordova.core.ApsalarPlugin"
+      version="0.1.0">
+    <name>cordova-plugin-apsalar</name>
+    <description>cordova plugin apsalar</description>
+
+    <js-module src="www/ApsalarPlugin.js" name="ApsalarPlugin">
+        <clobbers target="window.apsalarPlugin" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="ApsalarPlugin">
+              <param name="android-package" value="org.apache.cordova.core.ApsalarPlugin"/>
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+          <receiver android:exported="true" android:name="com.apsalar.sdk.ApsalarReceiver">
+                <intent-filter>
+                     <action android:name="com.android.vending.INSTALL_REFERRER"></action>
+                </intent-filter>
+          </receiver>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+          <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+          <uses-permission android:name="android.permission.INTERNET" />
+        </config-file>
+
+        <source-file src="src/android/apsalar/apsalar.jar" target-dir="libs" framework="true" />
+        <source-file src="src/android/ApsalarPlugin.java" target-dir="src/org/apache/cordova/core" />
+    </platform>
+
+</plugin>
