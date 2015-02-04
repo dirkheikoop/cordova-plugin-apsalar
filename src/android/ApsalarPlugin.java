@@ -18,7 +18,7 @@ public class ApsalarPlugin extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals(ACTION_INITIALIZE)) {
-            this.initialize(callbackContext);
+            this.initialize(args.getString(0), args.getString(1), args.getString(2), callbackContext);
             return true;
         }
 
@@ -35,12 +35,12 @@ public class ApsalarPlugin extends CordovaPlugin {
         return false;
       }
 
-    private void initialize(final CallbackContext callbackContext) {
+    private void initialize(final String apiKey, final String apiSecret, final String fbAppId, final CallbackContext callbackContext) {
         final Activity currentActivity = this.cordova.getActivity();
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
-                Apsalar.startSession(currentActivity, "API_KEY", "SECRET");
-                Apsalar.setFBAppId("FB APP ID");
+                Apsalar.startSession(currentActivity, apiKey, apiSecret);
+                Apsalar.setFBAppId(fbAppId);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, true));
             }
         });
