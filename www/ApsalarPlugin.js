@@ -8,21 +8,12 @@ var apsalarPlugin = {
     );
   },
 
-  setUserId: function(userId, successCallback, errorCallback) {
+  sendEvent: function(eventName, key, value, successCallback, errorCallback) {
     cordova.exec(
       successCallback,
       errorCallback,
       'ApsalarPlugin',
-      'setUserId', [userId]
-    );
-  },
-
-  purchase: function(successCallback, errorCallback) {
-    cordova.exec(
-      successCallback,
-      errorCallback,
-      'ApsalarPlugin',
-      'purchase', []
+      'sendEvent', [eventName, key, value]
     );
   },
 };

@@ -12,8 +12,7 @@ import org.json.JSONException;
 
 public class ApsalarPlugin extends CordovaPlugin {
     public static final String ACTION_INITIALIZE = "initialize";
-    public static final String ACTION_SET_USER_ID = "setUserId";
-    public static final String ACTIONS_PURCHASE = "purchase";
+    public static final String ACTIONS_SEND_EVENT = "sendEvent";
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -22,13 +21,8 @@ public class ApsalarPlugin extends CordovaPlugin {
             return true;
         }
 
-        if (action.equals(ACTION_SET_USER_ID)) {
-            this.setUserId(args.getString(0), callbackContext);
-            return true;
-        }
-
-        if (action.equals(ACTIONS_PURCHASE)) {
-            this.purchase(callbackContext);
+        if (action.equals(ACTIONS_SEND_EVENT)) {
+            this.sendEvent(args.getString(0), args.getString(1), args.getString(2), callbackContext);
             return true;
         }
 
@@ -46,20 +40,10 @@ public class ApsalarPlugin extends CordovaPlugin {
         });
     }
 
-    private void setUserId(final String userId, final CallbackContext callbackContext) {
+    private void sendEvent(final String eventName, final String key, final String value, final CallbackContext callbackContext) {
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
-                Apsalar.event("registration", "registered_user_id", userId);
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, true));
-            }
-        });
-
-    }
-
-    private void purchase(final CallbackContext callbackContext) {
-        cordova.getThreadPool().execute(new Runnable() {
-            public void run() {
-                Apsalar.event("purchase", "total", 0);
+                Apsalar.event(eventName, key, value);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, true));
             }
         });
@@ -68,5 +52,10 @@ public class ApsalarPlugin extends CordovaPlugin {
     @Override
     public void onPause(boolean multitasking) {
         Apsalar.unregisterApsalarReceiver();
+    }
+
+    @Override
+    public void onResume(boolean multitasking) {
+        Apsalar.registerReceiver(this.cordova.getActivity().getApplicationContext());
     }
 }
