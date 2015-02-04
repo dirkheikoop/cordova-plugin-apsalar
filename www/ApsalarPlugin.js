@@ -13,16 +13,16 @@ var apsalarPlugin = {
       successCallback,
       errorCallback,
       'ApsalarPlugin',
-      'initialize', [userId]
+      'setUserId', [userId]
     );
   },
 
-  purchase: function(value, successCallback, errorCallback) {
+  purchase: function(successCallback, errorCallback) {
     cordova.exec(
       successCallback,
       errorCallback,
       'ApsalarPlugin',
-      'initialize', [value]
+      'purchase', []
     );
   },
 };

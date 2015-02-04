@@ -28,7 +28,7 @@ public class ApsalarPlugin extends CordovaPlugin {
         }
 
         if (action.equals(ACTIONS_PURCHASE)) {
-            this.purchase(args.getInt(0), callbackContext);
+            this.purchase(callbackContext);
             return true;
         }
 
@@ -39,8 +39,8 @@ public class ApsalarPlugin extends CordovaPlugin {
         final Activity currentActivity = this.cordova.getActivity();
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
-                Apsalar.startSession(currentActivity, apiKey, apiSecret);
                 Apsalar.setFBAppId(fbAppId);
+                Apsalar.startSession(currentActivity, apiKey, apiSecret);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, true));
             }
         });
@@ -56,10 +56,10 @@ public class ApsalarPlugin extends CordovaPlugin {
 
     }
 
-    private void purchase(final Integer value, final CallbackContext callbackContext) {
+    private void purchase(final CallbackContext callbackContext) {
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
-                Apsalar.event("purchase", "total", value);
+                Apsalar.event("purchase", "total", 0);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, true));
             }
         });
