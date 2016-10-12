@@ -1,8 +1,8 @@
 //
 //  Apsalar.h
-//  Apsalar SDK for iPhone/iOS public API
+//  Apsalar SDK for iOS public API
 //
-//  Copyright © 2010-2011 Apsalar Inc. All rights reserved.
+//  Copyright © 2010-2016 Apsalar Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -10,17 +10,22 @@
 
 
 @interface Apsalar : NSObject
-+ (void) startSession:(NSString *)apiKey withKey:(NSString *)apiSecret ;
-+ (void) startSession:(NSString *)apiKey withKey:(NSString *)apiSecret andLaunchOptions:(NSDictionary *)launchOptions;
-+ (void) startSession:(NSString *)apiKey withKey:(NSString *)apiSecret andURL:(NSURL *)url;
-+ (void) reStartSession:(NSString *)apiKey withKey:(NSString *)apiSecret;
-+ (BOOL) sessionStarted;
-+ (void) endSession;
-+ (void) event:(NSString *)name;
-+ (void) event:(NSString *)name withArgs:(NSDictionary *)args;
-+ (void) eventWithArgs:(NSString *)name, ...; // use only subclasses of
++ (void)startSession:(NSString *)apiKey withKey:(NSString *)apiSecret ;
++ (void)startSession:(NSString *)apiKey withKey:(NSString *)apiSecret andLaunchOptions:(NSDictionary *)launchOptions;
++ (void)startSession:(NSString *)apiKey withKey:(NSString *)apiSecret andLaunchURL:(NSURL *)url;
++ (void)reStartSession:(NSString *)apiKey withKey:(NSString *)apiSecret;
++ (BOOL)sessionStarted;
++ (void)endSession;
++ (void)event:(NSString *)name;
++ (void)event:(NSString *)name withArgs:(NSDictionary *)args;
++ (void)eventWithArgs:(NSString *)name, ...; // use only subclasses of
                                               // NSObject, not primitive types
                                               // like int
+
++ (void)registerDeviceTokenForUninstall:(NSData *)deviceToken;
++ (void)registerDeferredDeepLinkHandler:(void (^)(NSString *deeplink))handler;
++ (int)setDeferredDeepLinkTimeout:(int)duration;
+
 + (Apsalar *) shared;
 + (NSTimeInterval) sessionDuration;
 + (NSDate *) sessionStartDate;
