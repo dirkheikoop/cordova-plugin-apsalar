@@ -1,26 +1,31 @@
 //
 //  Apsalar.h
-//  Apsalar SDK for iPhone/iOS public API
+//  Apsalar SDK for iOS public API
 //
-//  Copyright © 2010-2011 Apsalar Inc. All rights reserved.
+//  Copyright © 2010-2016 Apsalar Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 
-@interface Apsalar : NSObject 
-+ (void) startSession:(NSString *)apiKey withKey:(NSString *)apiSecret ;
-+ (void) startSession:(NSString *)apiKey withKey:(NSString *)apiSecret andLaunchOptions:(NSDictionary *)launchOptions;
-+ (void) startSession:(NSString *)apiKey withKey:(NSString *)apiSecret andURL:(NSURL *)url;
-+ (void) reStartSession:(NSString *)apiKey withKey:(NSString *)apiSecret;
-+ (BOOL) sessionStarted;
-+ (void) endSession;
-+ (void) event:(NSString *)name;
-+ (void) event:(NSString *)name withArgs:(NSDictionary *)args;
-+ (void) eventWithArgs:(NSString *)name, ...; // use only subclasses of 
-                                              // NSObject, not primitive types 
+@interface Apsalar : NSObject
++ (void)startSession:(NSString *)apiKey withKey:(NSString *)apiSecret ;
++ (void)startSession:(NSString *)apiKey withKey:(NSString *)apiSecret andLaunchOptions:(NSDictionary *)launchOptions;
++ (void)startSession:(NSString *)apiKey withKey:(NSString *)apiSecret andLaunchURL:(NSURL *)url;
++ (void)reStartSession:(NSString *)apiKey withKey:(NSString *)apiSecret;
++ (BOOL)sessionStarted;
++ (void)endSession;
++ (void)event:(NSString *)name;
++ (void)event:(NSString *)name withArgs:(NSDictionary *)args;
++ (void)eventWithArgs:(NSString *)name, ...; // use only subclasses of
+                                              // NSObject, not primitive types
                                               // like int
+
++ (void)registerDeviceTokenForUninstall:(NSData *)deviceToken;
++ (void)registerDeferredDeepLinkHandler:(void (^)(NSString *deeplink))handler;
++ (int)setDeferredDeepLinkTimeout:(int)duration;
+
 + (Apsalar *) shared;
 + (NSTimeInterval) sessionDuration;
 + (NSDate *) sessionStartDate;
@@ -29,8 +34,8 @@
 + (NSString *) apsalarID;
 + (NSString *)apsalarKeyspace;
 + (void) setBufferLimit:(int)size;
-@property(nonatomic, readonly) NSString *applicationName;
-@property(nonatomic, readonly) NSString *applicationIdentifier;
+@property(strong, nonatomic, readonly) NSString *applicationName;
+@property(strong, nonatomic, readonly) NSString *applicationIdentifier;
 + (BOOL) processJSRequest:(UIWebView *)webView withURL:(NSURLRequest *)url;
 @property(nonatomic) int minSessionDuration;  // Default: 5
 + (void) setMinSessionDuration:(int)seconds;
