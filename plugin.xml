@@ -44,6 +44,7 @@
         <header-file src="src/ios/CDVApsalarPlugin.h" />
         <source-file src="src/ios/CDVApsalarPlugin.m" />
         <header-file src="src/ios/Apsalar.h" />
+        <source-file src="src/ios/libApsalar.a" framework="true" />
 
         <framework src="libsqlite3.0.dylib" />
         <framework src="SystemConfiguration.framework" />
@@ -51,7 +52,6 @@
         <framework src="libz.1.1.3.dylib" />
         <framework src="AdSupport.framework" />
         <framework src="iAd.framework" />
-        <framework src="src/ios/libApsalar.a" custom="true" />
     </platform>
 
 </plugin>
